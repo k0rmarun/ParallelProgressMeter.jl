@@ -134,7 +134,7 @@ function initializeProgress(numTasks::Int64, numArray::Array{Int64, 1}, delay::F
     @assert numTasks == length(numArray) ["The array of iteration lengths is not the same size as the number of tasks"]
     
     #progArray stores the number of iterations each loop has progressed
-    progArray = SharedArray(Int64, numTasks)
+    progArray = SharedArray{Int64}(numTasks)
 
     #initialize update monitor that will record and print the progress of
     #each serial task
@@ -155,7 +155,7 @@ function initializeProgress(N::Int64, delay::Float64 = 1.0)
     
     #progArray stores the number of iterations each worker has processed, one fewer than the available workers is needed since
     #@parallel only launches code on workers other than the master one
-    progArray = SharedArray(Int64, nprocs()-1)
+    progArray = SharedArray{Int64}(nprocs()-1)
     idDict = Dict(zip(procs()[2:end], 1:nprocs()-1))
     
 
